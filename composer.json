@@ -1,0 +1,23 @@
+{
+    "name": "planetadeleste/oc-apistats-plugin",
+    "description": "Get statistics from api shopaholic models",
+    "type": "october-plugin",
+    "license": "MIT",
+    "keywords": ["october", "blog", "statistics", "api"],
+    "authors": [
+        {
+            "name": "Alvaro Canepa",
+            "email": "bfpdevel@gmail.com",
+            "role": "creator"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "PlanetaDelEste\\ApiStats\\": ""
+        }
+    },
+    "require": {
+        "php": ">=7.2",
+        "planetadeleste/oc-apitoolbox-plugin":"^1.0"
+    }
+}
