@@ -1,29 +1,32 @@
 <?php namespace PlanetaDelEste\ApiStats\Controllers\Api;
 
-use Lovata\Buddies\Models\User;
-use PlanetaDelEste\ApiStats\Classes\Stat\UserStats;
+use Lovata\OrdersShopaholic\Models\Order;
+use PlanetaDelEste\ApiStats\Classes\Stat\OrderStats;
 use PlanetaDelEste\ApiStats\Traits\Controllers\StatsControllerTrait;
 use PlanetaDelEste\ApiToolbox\Classes\Api\Base;
 
 /**
- * Class Users
+ * Class Orders
  *
  * @package PlanetaDelEste\ApiStats\Controllers\Api
  */
-class Users extends Base
+class Orders extends Base
 {
     use StatsControllerTrait;
-
-    public function getStatClass(): string
-    {
-        return UserStats::class;
-    }
 
     /**
      * @return string
      */
     public function getModelClass(): string
     {
-        return User::class;
+        return Order::class;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStatClass(): string
+    {
+        return OrderStats::class;
     }
 }

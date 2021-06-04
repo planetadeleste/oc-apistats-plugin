@@ -15,5 +15,11 @@ Route::prefix('api/v1')
                 ->group(function () {
                     Route::get('stats', 'Users@stats')->name('stats');
                 });
+
+            Route::prefix('orders')
+                ->name('orders.')
+                ->group(function () {
+                    Route::get('stats', 'Orders@stats')->name('stats');
+                });
         }
     );

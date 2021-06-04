@@ -18,25 +18,29 @@ trait StatsControllerTrait
 
     protected function collectStats(): array
     {
-        /** @var \Model|\Eloquent $sModelClass */
-        $sModelClass = $this->getModelClass();
-        $iTotal = $sModelClass::count();
-        $obDate = now()->subMonthsNoOverflow(11);
-        $arStats = [
-            'total' => $iTotal,
-            'months' => []
+        /** @var \PlanetaDelEste\Stats\Classes\Stats\StatsBase $sModelClass */
+        $sModelClass = $this->getStatClass();
+        $obStats = $sModelClass::query()
+            ->start(now()->subMonthsNoOverflow(11))
+            ->end(now()->subSecond())
+            ->groupByMonth()
+            ->get()
+        ;
+        return [
+            'total' => $obStats->max('value'),
+            'months' => $obStats->toArray()
         ];
-        for ($n = 1; $n <= 12; $n++) {
-            $iCount = $sModelClass::whereYear($this->getDateColumn(), $obDate->year)
-                ->whereMonth($this->getDateColumn(), $obDate->month)
-                ->count();
-
-            $sKey = $obDate->year.'-'.$obDate->month;
-            $arStats = array_add($arStats, 'months.'.$sKey, $iCount);
-            $obDate->addMonth();
-        }
-
-        return $arStats;
+//        for ($n = 1; $n <= 12; $n++) {
+//            $iCount = $sModelClass::whereYear($this->getDateColumn(), $obDate->year)
+//                ->whereMonth($this->getDateColumn(), $obDate->month)
+//                ->count();
+//
+//            $sKey = $obDate->year.'-'.$obDate->month;
+//            $arStats = array_add($arStats, 'months.'.$sKey, $iCount);
+//            $obDate->addMonth();
+//        }
+//
+//        return $arStats;
     }
 
     public function getDateColumn(): string
@@ -44,5 +48,5 @@ trait StatsControllerTrait
         return 'created_at';
     }
 
-    abstract public function getModelClass(): string;
+    abstract public function getStatClass(): string;
 }
