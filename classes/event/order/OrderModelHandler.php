@@ -64,12 +64,11 @@ class OrderModelHandler extends ModelHandler
     {
         parent::afterSave();
         if ($this->obElement->wasChanged('status_id')) {
-            $obStats = Stat::getByName(OrderStats::class)->getByItem($this->obElement->id)->get();
-            $obStats->each(
-                function (Stat $obStat) {
-                    $obStat->update(['code' => $this->obElement->status->code]);
-                }
-            );
+            OrderStats::instance()
+                ->model($this->obElement)
+                ->update()
+                ->increase($this->obElement->position_total_price_value, $this->obElement->created_at);
+            ;
         }
     }
 

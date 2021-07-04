@@ -32,6 +32,7 @@ class SeedOrderStats extends Seeder
         $obOrders->each(function (Order $obOrder) {
             OrderStats::instance()
                 ->model($obOrder)
+                ->update()
                 ->increase($obOrder->position_total_price_value, $obOrder->created_at);
 
             $this->bar->advance();

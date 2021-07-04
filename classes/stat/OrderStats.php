@@ -18,4 +18,9 @@ class OrderStats extends StatsBase
     {
         return $this->obElement ? $this->obElement->status->code : null;
     }
+
+    public function getUserId(): ?int
+    {
+        return $this->obElement ? $this->obElement->user_id : null;
+    }
 }
